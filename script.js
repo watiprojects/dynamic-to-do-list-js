@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
+    
 
     function loadTasks() {
     const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     //Create the addTask Function
 
-    function addTask() {
+    function addTask(taskText, save = true) {
 
         if (taskText === undefined){
              //get the input and remove white spaces
@@ -47,9 +48,17 @@ document.addEventListener('DOMContentLoaded', function(){
             alert("Please enter a task");
         }
 
+        if (save) {
+        const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+        storedTasks.push(taskText);
+        localStorage.setItem('tasks', JSON.stringify(storedTasks));
     }
 
-    addButton.addEventListener("click", addTask);
+    }
+
+    addButton.addEventListener("click", function(){
+        addTask(); //correcting error - call add task without passing event object
+    });
 
     taskInput.addEventListener("keypress", function(event){
         if(event.key === 'Enter'){
