@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
 
+    function loadTasks() {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+    storedTasks.forEach(taskText => addTask(taskText, false)); // 'false' indicates not to save again to Local Storage
+}
+
     //select DOM elements
     const addButton = document.getElementById("add-task-btn");
     
@@ -10,9 +15,12 @@ document.addEventListener('DOMContentLoaded', function(){
     //Create the addTask Function
 
     function addTask() {
-        //get the input and remove white spaces
-        const taskText = taskInput.value.trim();
 
+        if (taskText === undefined){
+             //get the input and remove white spaces
+            taskText = taskInput.value.trim();
+        }
+        
         if(taskText !== ""){
             //create new list item and add text
             const newItem = document.createElement('li')
